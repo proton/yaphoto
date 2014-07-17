@@ -2,4 +2,3 @@
 - album photos
 - tag photos
 - changing url on photo change
-- code generation

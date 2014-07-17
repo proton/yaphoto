@@ -39,6 +39,9 @@ obj_to_arr = function (obj) {
 		$scope.photo = null;
 		$scope.current_image = null;
 
+		$scope.code_url = null;
+		$scope.code_thumb = null;
+
 		//TODO: грузит не все фотки, а только 100 первых
 		var url = config.url+'/users/'+config.user+'/albums/?format=json&callback=JSON_CALLBACK';
 		$http({ method: "JSONP", url: url}).success(function(data){
