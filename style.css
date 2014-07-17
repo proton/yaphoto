@@ -1,0 +1,55 @@
+body {
+	margin: 0;
+}
+
+.photos_block {
+	width: 80%;
+}
+
+.photos_block .photo_frame {
+	width: 100%;
+}
+
+ul.thumbs {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow-y: hidden;
+	white-space: nowrap;
+}
+
+ul.thumbs li {
+	margin: 0;
+	padding: 0 1px 0 1px;
+	display: inline-block;
+}
+
+ul.thumbs li img {	
+	height: 50px;
+	cursor: pointer;
+}
+
+.panel {
+	float: right;
+	width: 20%;
+	background: #eee;
+	height: 100%;
+}
+
+.panel ul.tags {
+	list-style-type: none;
+	padding: 0;
+}
+
+.panel ul.tags li {
+	display: inline;
+}
+
+.codes {
+	width: 100%;
+}
+
+.codes pre {
+	white-space: normal;
+	background: #ddd;
+}

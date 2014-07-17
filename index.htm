@@ -1,0 +1,81 @@
+<html ng-app='app'>
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="style.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular-route.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular-resource.min.js"></script>
+    <script  src='config.js'></script>
+    <script  src='app.js'></script>
+  </head>
+  <body ng-controller="PhotosController as c">
+    <div class="panel">
+      <ul>
+        <li>Все фотографии</li>
+      </ul>
+      <b>Альбомы</b>
+      <ul class="albums">
+        <li ng-repeat="album in albums">{{album.title}}</li>
+      </ul>
+      <b>Теги</b>
+      <ul class="tags">
+        <li ng-repeat="tag in tags">{{tag.title}} </li>
+      </ul>
+    </div>
+    <div class="photos_block">
+      <ul class="thumbs">        
+        <li ng-repeat="photo in photos" ng-click="c.setIndex($index)">
+          <img ng-src='{{photo.img.XS.href}}' load-dispatcher />
+        </a>
+      </ul>
+      <img class="photo_frame" ng-src="{{current_image}}"></img>
+      <div class='codes' ng-show="photo">
+        <h4>Коды</h4>
+         html, вставка фотографии (с выбором размера из доступных) и вставка фотографии, являющейся ссылкой на страницу фотографии на яндексе, также с выбором размера. Впрочем, без второго я могу и пережить - отбил мне яндекс желание на него ссылаться:-)
+         //
+         <br/>
+         Ссылка на: 
+         <select>
+           <optgroup label="Изображение">
+             <option data-url="{{img.href}}" ng-repeat="img in photo.img">{{img.width}}x{{img.height}}</option>
+           </optgroup>
+           <optgroup label="Страницу">    
+             <option>Данную страницу</option>
+             <option data-url="{{photo.links.alternate}}">Страницу на яндекс.фотках</option>
+           </optgroup>
+         </select>
+         Превьюшка:
+         <select>
+             <option data-url="{{img.href}}" ng-repeat="img in photo.img">{{img.width}}x{{img.height}}</option>
+         </select>
+        <pre>&lt;a href="{{photo.img.orig.href}}"&gt&lt;img src="{{photo.img.S.href}}">&lt/a&gt</pre>
+        <br/>
+      </div>
+    </div>
+  </body>
+</html>
+
+
+<!--
+{{photo.title}}
+created: {{card.created}}<br/>
+album: {{card.album}}<br/>
+tags: {{card.tags}}
+
+
+    <div ng-controller="PhotosController as c">
+      <div class="fotorama" data-nav="thumbs">
+        <a ng-repeat="photo in c.photos" href="{{photo.img.orig.href}}">
+          <img ng-src='{{c.thumb(photo).href}}' />
+        </a>
+      </div>
+    </div>
+
+
+      <div class="fotorama" data-nav="thumbs" data-auto="false">
+        <a ng-repeat="photo in photos" href="{{photo.img.XXL.href}}">
+          <img ng-src='{{photo.img.S.href}}' load-dispatcher />
+        </a>
+      </div>
+ -->
