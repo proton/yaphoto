@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", onWindowResize, false);
 window.onresize = onWindowResize;
 
 (function(){
-	var app = angular.module('app', ['ngRoute']);
+	var app = angular.module('app', ['ngAnimate']);
 
 	// app.config(function($routeProvider) {
 	// 	$routeProvider
@@ -34,7 +34,7 @@ window.onresize = onWindowResize;
 	// 		.otherwise({ redirectTo:'/' });
 	// })
 
-	app.controller('PhotosController', ['$scope', '$location', '$routeParams', '$http', '$window', function($scope, $location, $routeParams, $http, $window){
+	app.controller('PhotosController', ['$scope', '$location', '$http', '$window', function($scope, $location, $http, $window){
 		var c = this;
 
 		$scope.albums = [];

@@ -58,3 +58,37 @@ ul.nav_list li.active a {
 	color: red;
 	text-decoration: none;
 }
+
+ul.thumbs li.ng-enter,
+ul.thumbs li.ng-leave,
+ul.thumbs li.ng-move {
+  -webkit-transition: 0.5s linear all;
+  -moz-transition: 0.5s linear all;
+  -o-transition: 0.5s linear all;
+  transition: 0.5s linear all;
+}
+
+ul.thumbs li.ng-enter,
+ul.thumbs li.ng-move {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+ul.thumbs li.ng-move.ng-move-active,
+ul.thumbs li.ng-enter.ng-enter-active {
+  opacity: 1;
+  height: 120px;
+}
+
+ul.thumbs li.ng-leave {
+  opacity: 1;
+  overflow: hidden;
+}
+
+ul.thumbs li.ng-leave.ng-leave-active {
+  opacity: 0;
+  height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
