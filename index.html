@@ -48,7 +48,7 @@
             <option ng-repeat="img in photo.img" value="{{img.href}}">{{img.width}}x{{img.height}}</option>
         </select>
         <div ng-show="photo.code_url && photo.code_thumb">
-          <pre>&lt;a href="{{code_url}}"&gt;&lt;img src="{{code_thumb}}">&lt;/a&gt;</pre>
+          <pre>&lt;a href="{{photo.code_url}}"&gt;&lt;img src="{{photo.code_thumb}}">&lt;/a&gt;</pre>
           <a href="{{photo.code_url}}"><img src="{{photo.code_thumb}}"></a>
         </div>
       </div>
