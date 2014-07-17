@@ -11,22 +11,22 @@
   </head>
   <body ng-controller="PhotosController as c">
     <div class="panel">
-      <ul>
-        <li>Все фотографии</li>
+      <ul class="nav_list">
+        <li ng-class="{active: !album_id && !tag_id}"><a href="#/">Все фотографии</a></li>
       </ul>
       <b>Альбомы</b>
-      <ul class="albums">
-        <li ng-repeat="album in albums">{{album.title}}</li>
+      <ul class="albums nav_list">
+        <li ng-repeat="album in albums" ng-class="{active: album_id==to_id(album)}"><a href="#/albums/{{to_id(album)}}">{{album.title}}</a></li>
       </ul>
       <b>Теги</b>
-      <ul class="tags">
-        <li ng-repeat="tag in tags">{{tag.title}} </li>
+      <ul class="tags nav_list">
+        <li ng-repeat="tag in tags" ng-class="{active: tag_id==to_id(tag)}"><a href="#/tags/{{to_id(tag)}}">{{tag.title}} </a> </li>
       </ul>
     </div>
     <div class="photos_block">
-      <ul class="thumbs">        
-        <li ng-repeat="photo in photos" ng-click="c.setIndex($index)">
-          <img ng-src='{{photo.img.XXS.href}}' load-dispatcher />
+      <ul class="thumbs">
+        <li ng-repeat="photo in photos" ng-click="PhotosController.setIndex($index)">
+          <img ng-src='{{photo.img.XXS.href}}' />
         </a>
       </ul>
       <img class="photo_frame" ng-src="{{current_image}}"></img>
@@ -47,7 +47,7 @@
         <select ng-model="code_thumb">
             <option ng-repeat="img in photo.img" value="{{img.href}}">{{img.width}}x{{img.height}}</option>
         </select>
-        <div ng-shows="code_url && code_thumb">
+        <div ng-show="code_url && code_thumb">
           <pre>&lt;a href="{{code_url}}"&gt;&lt;img src="{{code_thumb}}">&lt;/a&gt;</pre>
           <a href="{{code_url}}"><img src="{{code_thumb}}"></a>
         </div>
@@ -55,27 +55,3 @@
     </div>
   </body>
 </html>
-
-
-<!--
-{{photo.title}}
-created: {{card.created}}<br/>
-album: {{card.album}}<br/>
-tags: {{card.tags}}
-
-
-    <div ng-controller="PhotosController as c">
-      <div class="fotorama" data-nav="thumbs">
-        <a ng-repeat="photo in c.photos" href="{{photo.img.orig.href}}">
-          <img ng-src='{{c.thumb(photo).href}}' />
-        </a>
-      </div>
-    </div>
-
-
-      <div class="fotorama" data-nav="thumbs" data-auto="false">
-        <a ng-repeat="photo in photos" href="{{photo.img.XXL.href}}">
-          <img ng-src='{{photo.img.S.href}}' load-dispatcher />
-        </a>
-      </div>
- -->

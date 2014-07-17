@@ -53,3 +53,8 @@ ul.thumbs li img {
 	white-space: normal;
 	background: #ddd;
 }
+
+ul.nav_list li.active a {
+	color: red;
+	text-decoration: none;
+}
