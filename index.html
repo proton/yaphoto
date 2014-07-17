@@ -20,12 +20,12 @@
       </ul>
       <b>Теги</b>
       <ul class="tags nav_list">
-        <li ng-repeat="tag in tags" ng-class="{active: tag_id==to_id(tag)}"><a href="#/tags/{{to_id(tag)}}">{{tag.title}} </a> </li>
+        <li ng-repeat="tag in tags" ng-class="{active: tag_id==to_id(tag)}"><a href="#/tags/{{to_id(tag)}}">{{tag.title}}</a> </li>
       </ul>
     </div>
     <div class="photos_block">
       <ul class="thumbs">
-        <li ng-repeat="photo in photos" ng-click="PhotosController.setIndex($index)">
+        <li ng-repeat="photo in photos" ng-click="c.setIndex($index)">
           <img ng-src='{{photo.img.XXS.href}}' />
         </a>
       </ul>

@@ -1,4 +1,3 @@
-- routes
-- album photos
-- tag photos
 - changing url on photo change
+- animations
+- api pagination
