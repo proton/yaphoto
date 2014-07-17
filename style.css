@@ -10,25 +10,6 @@ body {
 	width: 100%;
 }
 
-ul.thumbs {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow-y: hidden;
-	white-space: nowrap;
-}
-
-ul.thumbs li {
-	margin: 0;
-	padding: 0 1px 0 1px;
-	display: inline-block;
-}
-
-ul.thumbs li img {	
-	/*height: 50px;*/
-	cursor: pointer;
-}
-
 .panel {
 	float: right;
 	width: 20%;
@@ -57,6 +38,29 @@ ul.thumbs li img {
 ul.nav_list li.active a {
 	color: red;
 	text-decoration: none;
+}
+
+ul.thumbs {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow-y: hidden;
+	white-space: nowrap;
+}
+
+ul.thumbs li {
+	margin: 0;
+	display: inline-block;
+	border: solid white;
+	border-width: 3px 1px 3px 1px;
+	opacity: 0.7;
+	cursor: pointer;
+}
+
+ul.thumbs li.active {
+	border-color: blue;
+	opacity: 1;
+	border-width: 3px;
 }
 
 ul.thumbs li.ng-enter,

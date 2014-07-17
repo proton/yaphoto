@@ -27,7 +27,7 @@
     </div>
     <div id="photos_block">
       <ul class="thumbs">
-        <li ng-repeat="photo in photos" ng-click="c.setIndex($index)">
+        <li ng-repeat="photo in photos" ng-click="c.setIndex($index)" ng-class="{active: $index==index}">
           <img ng-src='{{photo.img.XXS.href}}' />
         </a>
       </ul>
