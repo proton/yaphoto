@@ -2,11 +2,11 @@ body {
 	margin: 0;
 }
 
-.photos_block {
+#photos_block {
 	width: 80%;
 }
 
-.photos_block .photo_frame {
+#photos_block .photo_frame {
 	width: 100%;
 }
 

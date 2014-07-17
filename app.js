@@ -6,15 +6,16 @@ obj_to_arr = function (obj) {
 	return vls;
 };
 
-// Object.values = function (obj) {
-//		 var vals = [];
-//		 for( var key in obj ) {
-//				 if ( obj.hasOwnProperty(key) ) {
-//						 vals.push(obj[key]);
-//				 }
-//		 }
-//		 return vals;
-// }
+function onWindowResize() {
+  var el = document.getElementById('photos_block');
+  $scope = angular.element(el).scope();
+  $scope.$apply(function() {
+    $scope.photos_block_width = el.offsetWidth;
+    $scope.setPhoto();
+  });
+};
+document.addEventListener("DOMContentLoaded", onWindowResize, false);
+window.onresize = onWindowResize;
 
 (function(){
 	var app = angular.module('app', ['ngRoute']);
@@ -79,11 +80,11 @@ obj_to_arr = function (obj) {
 
 		this.reloadPhotos();
 
-		this.setPhoto = function(){
+		$scope.setPhoto = function(){
 			$scope.photo = ($scope.photos.length==0 || $scope.index==-1) ? null : $scope.photos[$scope.index];
 			if($scope.photo)
 			{
-				var f = function(img){ return img.width>=$window.innerWidth; };
+				var f = function(img){ return img.width>=$scope.photos_block_width; };
 				var images = $scope.photo.img;
 				var p = obj_to_arr(images).filter(f)[0] || images.orig || images.XL;
 				$scope.current_image = p.href;
@@ -94,24 +95,14 @@ obj_to_arr = function (obj) {
 			}
 		};
 
-		// $scope.photo = function(){
-		// 	if($scope.photos.length==0) return null;
-		// 	return $scope.photos[$scope.photo_index];
-		// };
-
 		this.setIndex = function(index){
 			$scope.index = index;
-			this.setPhoto();
+			$scope.setPhoto();
 		};
 
 		$scope.to_id = function(t){
 			return decodeURI(t.id.split(':')[5]);
-		}
-
-		// $scope.$watch(
-		// 	function(){ return $window.innerWidth; },
-		// 	function(value){ console.log(value); }
-		// );
+		};
 
 		$scope.$on('$locationChangeSuccess', function (event) {
 			var location_array = $location.$$path.split('/');
@@ -120,42 +111,4 @@ obj_to_arr = function (obj) {
 			c.reloadPhotos();
 		});
 	}]);
-
-	// app.directive('loadDispatcher', function() {
- //		return {
- //			restrict: 'A',
- //			link: function($scope, element, attrs) {
- //					element.bind('load', function() {
- //					$scope.$emit('$imageLoaded');
- //				});
- //			}
- //		};
-	// })
 })();
-
-
-
-// app.directive('tagsManager', function () {
-//	return {
-//			restrict: 'A',
-//			link: function (scope, element, attrs) {
-//				$('.fotorama').fotorama();
-//				console.log(c);
-//			}
-//		}
-//	});
-
-// $scope.options = {
-// 	width: '100%',
-// 	height: 400,
-// 	loop: true,
-// 	keyboard: true,
-// 	nav: 'thumbs',
-// 	load: function (e, extra) {
-//		 console.log(extra); //{user: undefined/true} дополнительные данные
-//	 },
-// };
-
-// this.thumb = function(photo){
-// 	return photo.img.M.width>=300 ? photo.img.M : photo.img.L;
-// }
