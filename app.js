@@ -45,9 +45,6 @@ window.onresize = onWindowResize;
 		$scope.photo = null;
 		$scope.current_image = null;
 
-		$scope.code_url = null;
-		$scope.code_thumb = null;
-
 		var base_url = config.url+'/users/'+config.user;
 		//TODO: грузит не все фотки, а только 100 первых
 		var url = base_url+'/albums/?format=json&callback=JSON_CALLBACK';

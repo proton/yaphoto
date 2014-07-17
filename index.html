@@ -34,7 +34,7 @@
         <h4>Коды</h4>
         <br/>
         Link: 
-        <select ng-model="code_url">
+        <select ng-model="photo.code_url">
           <optgroup label="Изображение">
             <option data-url="{{img.href}}" ng-repeat="img in photo.img" value="{{img.href}}">{{img.width}}x{{img.height}}</option>
           </optgroup>
@@ -44,12 +44,12 @@
           </optgroup>
         </select>
         Preview:
-        <select ng-model="code_thumb">
+        <select ng-model="photo.code_thumb">
             <option ng-repeat="img in photo.img" value="{{img.href}}">{{img.width}}x{{img.height}}</option>
         </select>
-        <div ng-show="code_url && code_thumb">
+        <div ng-show="photo.code_url && photo.code_thumb">
           <pre>&lt;a href="{{code_url}}"&gt;&lt;img src="{{code_thumb}}">&lt;/a&gt;</pre>
-          <a href="{{code_url}}"><img src="{{code_thumb}}"></a>
+          <a href="{{photo.code_url}}"><img src="{{photo.code_thumb}}"></a>
         </div>
       </div>
     </div>
