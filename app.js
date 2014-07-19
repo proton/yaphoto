@@ -6,33 +6,51 @@ obj_to_arr = function (obj) {
 	return vls;
 };
 
-function onWindowResize() {
-  var el = document.getElementById('photos_block');
-  $scope = angular.element(el).scope();
-  $scope.$apply(function() {
-    $scope.photos_block_width = el.offsetWidth;
-    $scope.setPhoto();
-  });
+var fotorama_config = {
+  width: '100%',
+  height: 800,
+  loop: true,
+  nav: 'thumbs',
+  navposition: 'top',
+  fit: 'cover',
+  keyboard: true,
+  arrows: true,
+  click: true,
+  swipe: true,
+  allowfullscreen: true
 };
-document.addEventListener("DOMContentLoaded", onWindowResize, false);
-window.onresize = onWindowResize;
+
+
+function photo_to_obj(photo)
+{
+	var full_photo = photo.img.orig || photo.img.XXXL || photo.img.XL || photo.img.L;
+	var full = full_photo.href;
+	var thumb = photo.img.XS.href;
+	return {img: full, thumb: thumb};
+
+ //  img: '1.jpg',
+ //  thumb: '1-thumb.jpg',
+ //  full: '1-full.jpg', // Separate image for the fullscreen mode.
+ //  id: 'one', // Custom anchor is used with the hash:true option.
+ //  caption: 'The first caption',
+ //  html: $('selector'), // ...or '<div>123</div>'. Custom HTML inside the frame.
+ //  fit: 'cover', // Override the global fit option.
+ //  any: 'Any data relative to the frame you want to store'
+}
+
+// function onWindowResize() {
+//   var el = document.getElementById('photos_block');
+//   $scope = angular.element(el).scope();
+//   $scope.$apply(function() {
+//     $scope.photos_block_width = el.offsetWidth;
+//     $scope.setPhoto();
+//   });
+// };
+// document.addEventListener("DOMContentLoaded", onWindowResize, false);
+// window.onresize = onWindowResize;
 
 (function(){
 	var app = angular.module('app', ['ngAnimate']);
-
-	// app.config(function($routeProvider) {
-	// 	$routeProvider
-	// 		.when('/', {resolve: {redirect: 'PhotosController'}})
-	// 		.when('/albums/:album_id', {
-	// 			template: '',
-	// 			controller: 'PhotosController'
-	// 		})
-	// 		.when('/tags/:tag_id', {
-	// 			template: '',
-	// 			controller: 'PhotosController'
-	// 		})
-	// 		.otherwise({ redirectTo:'/' });
-	// })
 
 	app.controller('PhotosController', ['$scope', '$location', '$http', '$window', function($scope, $location, $http, $window){
 		var c = this;
@@ -44,6 +62,9 @@ window.onresize = onWindowResize;
 		$scope.index = null;
 		$scope.photo = null;
 		$scope.current_image = null;
+
+		var gallery = $('#gallery').fotorama(fotorama_config);
+		$scope.fotorama = gallery.data('fotorama');
 
 		var base_url = config.url+'/users/'+config.user;
 		//TODO: грузит не все фотки, а только 100 первых
@@ -71,35 +92,21 @@ window.onresize = onWindowResize;
 			url += '/photos/?format=json&callback=JSON_CALLBACK';
 			$http({ method: "JSONP", url: url}).success(function(data){
 				$scope.photos = data.entries;
-				c.setIndex(0);
+				$scope.fotorama.load($scope.photos.map(photo_to_obj));
 			});
-		}
+		};
 
 		this.reloadPhotos();
-
-		$scope.setPhoto = function(){
-			$scope.photo = ($scope.photos.length==0 || $scope.index==-1) ? null : $scope.photos[$scope.index];
-			if($scope.photo)
-			{
-				var f = function(img){ return img.width>=$scope.photos_block_width; };
-				var images = $scope.photo.img;
-				var p = obj_to_arr(images).filter(f)[0] || images.orig || images.XL;
-				$scope.current_image = p.href;
-			}
-			else
-			{
-				$scope.current_image = null;
-			}
-		};
-
-		this.setIndex = function(index){
-			$scope.index = index;
-			$scope.setPhoto();
-		};
 
 		$scope.to_id = function(t){
 			return decodeURI(t.id.split(':')[5]);
 		};
+
+		$('#gallery').on('fotorama:showend', function (e, fotorama) {
+			$scope.$apply(function(){
+				$scope.photo = $scope.photos.length==0 ? null : $scope.photos[$scope.fotorama.activeIndex];
+			});
+		});
 
 		$scope.$on('$locationChangeSuccess', function (event) {
 			var location_array = $location.$$path.split('/');

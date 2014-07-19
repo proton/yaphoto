@@ -2,8 +2,11 @@
   <head>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="http://fotorama.s3.amazonaws.com/4.5.2/fotorama.css" />
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://fotorama.s3.amazonaws.com/4.5.2/fotorama.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular-route.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular-resource.min.js"></script>
@@ -24,36 +27,30 @@
       <ul class="tags nav_list">
         <li ng-repeat="tag in tags" ng-class="{active: tag_id==to_id(tag)}"><a href="#/tags/{{to_id(tag)}}">{{tag.title}}</a> </li>
       </ul>
-    </div>
-    <div id="photos_block">
-      <ul class="thumbs">
-        <li ng-repeat="photo in photos" ng-click="c.setIndex($index)" ng-class="{active: $index==index}">
-          <img ng-src='{{photo.img.XXS.href}}' />
-        </a>
-      </ul>
-      <img class="photo_frame" ng-src="{{current_image}}"></img>
-      <div class='codes' ng-show="photo">
-        <h4>Коды</h4>
+      <div class="codes" ng-show="photo">
+        <b>Код</b>
         <br/>
-        Link: 
-        <select ng-model="photo.code_url">
-          <optgroup label="Изображение">
-            <option data-url="{{img.href}}" ng-repeat="img in photo.img" value="{{img.href}}">{{img.width}}x{{img.height}}</option>
-          </optgroup>
-          <optgroup label="Страница">    
-            <!-- <option>Данную страницу</option> -->
-            <option value="{{photo.links.alternate}}">Страницу на яндекс.фотках</option>
-          </optgroup>
-        </select>
-        Preview:
-        <select ng-model="photo.code_thumb">
-            <option ng-repeat="img in photo.img" value="{{img.href}}">{{img.width}}x{{img.height}}</option>
-        </select>
-        <div ng-show="photo.code_url && photo.code_thumb">
-          <pre>&lt;a href="{{photo.code_url}}"&gt;&lt;img src="{{photo.code_thumb}}">&lt;/a&gt;</pre>
-          <a href="{{photo.code_url}}"><img src="{{photo.code_thumb}}"></a>
+          Link: 
+          <select ng-model="photo.code_url">
+            <optgroup label="Изображение">
+              <option data-url="{{img.href}}" ng-repeat="img in photo.img" value="{{img.href}}">{{img.width}}x{{img.height}}</option>
+            </optgroup>
+            <optgroup label="Страница">    
+              <option value="{{photo.links.alternate}}">Страницу на яндекс.фотках</option>
+            </optgroup>
+          </select>
+          <br/>
+          Preview:
+          <select ng-model="photo.code_thumb">
+              <option ng-repeat="img in photo.img" value="{{img.href}}">{{img.width}}x{{img.height}}</option>
+          </select>
+          <div ng-show="photo.code_url && photo.code_thumb">
+            <pre>&lt;a href="{{photo.code_url}}"&gt;&lt;img src="{{photo.code_thumb}}">&lt;/a&gt;</pre>
+            <a href="{{photo.code_url}}"><img src="{{photo.code_thumb}}"></a>
+          </div>
         </div>
       </div>
     </div>
+    <div id="gallery"></div>
   </body>
 </html>
