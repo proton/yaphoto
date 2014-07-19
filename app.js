@@ -63,8 +63,7 @@ function photo_to_obj(photo)
 		$scope.photo = null;
 		$scope.current_image = null;
 
-		var gallery = $('#gallery').fotorama(fotorama_config);
-		$scope.fotorama = gallery.data('fotorama');
+		$scope.fotorama = $('#gallery').fotorama(fotorama_config).data('fotorama');
 
 		var base_url = config.url+'/users/'+config.user;
 		//TODO: грузит не все фотки, а только 100 первых
@@ -103,9 +102,9 @@ function photo_to_obj(photo)
 		};
 
 		$('#gallery').on('fotorama:showend', function (e, fotorama) {
-			$scope.$apply(function(){
-				$scope.photo = $scope.photos.length==0 ? null : $scope.photos[$scope.fotorama.activeIndex];
-			});
+			var photo = $scope.photos.length==0 ? null : $scope.photos[$scope.fotorama.activeIndex];
+			if($scope.$$phase) $scope.photo = photo;
+			else $scope.$apply(function(){ $scope.photo = photo; });
 		});
 
 		$scope.$on('$locationChangeSuccess', function (event) {
