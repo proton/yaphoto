@@ -103,11 +103,9 @@ function photo_to_obj(photo)
 		};
 
 		$('#gallery').on('fotorama:showend', function (e, fotorama) {
-			// console.log($scope);
-			// $scope.$apply(function(){
-			// 	$scope.x = 1;
-			// 	$scope.photo = $scope.photos.length==0 ? null : $scope.photos[$scope.fotorama.activeIndex];
-			// });
+			$scope.$apply(function(){
+				$scope.photo = $scope.photos.length==0 ? null : $scope.photos[$scope.fotorama.activeIndex];
+			});
 		});
 
 		$scope.$on('$locationChangeSuccess', function (event) {
