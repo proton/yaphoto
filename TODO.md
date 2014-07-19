@@ -1,3 +1,2 @@
 - changing url on photo change
-- animations
 - api pagination

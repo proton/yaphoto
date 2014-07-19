@@ -8,14 +8,17 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://fotorama.s3.amazonaws.com/4.5.2/fotorama.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular-route.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular-resource.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular-animate.min.js"></script>
-    <script  src='config.js'></script>
-    <script  src='app.js'></script>
+    <script src="pageslide.js"></script>
+    <script src='config.js'></script>
+    <script src='app.js'></script>
   </head>
   <body ng-controller="PhotosController as c">
-    <div class="panel">
+    <a pageslide href="#panel" class="panel-open" ng-click="panel_open = !panel_open"><img src="menu.svg" /></a>
+    <div id="gallery"></div>
+
+    <div id="panel">
+      <a id="panel-close" href="#"></a>
       <ul class="nav_list">
         <li ng-class="{active: !album_id && !tag_id}"><a href="#/">Все фотографии</a></li>
       </ul>
@@ -46,11 +49,10 @@
           </select>
           <div ng-show="photo.code_url && photo.code_thumb">
             <pre>&lt;a href="{{photo.code_url}}"&gt;&lt;img src="{{photo.code_thumb}}">&lt;/a&gt;</pre>
-            <a href="{{photo.code_url}}"><img src="{{photo.code_thumb}}"></a>
+            <a href="{{photo.code_url}}"><img ng-src="{{photo.code_thumb}}"></a>
           </div>
         </div>
       </div>
     </div>
-    <div id="gallery"></div>
   </body>
 </html>

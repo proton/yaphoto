@@ -50,7 +50,7 @@ function photo_to_obj(photo)
 // window.onresize = onWindowResize;
 
 (function(){
-	var app = angular.module('app', ['ngAnimate']);
+	var app = angular.module('app', ["pageslide-directive"]);
 
 	app.controller('PhotosController', ['$scope', '$location', '$http', '$window', function($scope, $location, $http, $window){
 		var c = this;
@@ -103,9 +103,11 @@ function photo_to_obj(photo)
 		};
 
 		$('#gallery').on('fotorama:showend', function (e, fotorama) {
-			$scope.$apply(function(){
-				$scope.photo = $scope.photos.length==0 ? null : $scope.photos[$scope.fotorama.activeIndex];
-			});
+			// console.log($scope);
+			// $scope.$apply(function(){
+			// 	$scope.x = 1;
+			// 	$scope.photo = $scope.photos.length==0 ? null : $scope.photos[$scope.fotorama.activeIndex];
+			// });
 		});
 
 		$scope.$on('$locationChangeSuccess', function (event) {
