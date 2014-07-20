@@ -1,1 +1,2 @@
 - changing url on photo change
+- use factories for data get
