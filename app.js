@@ -62,6 +62,7 @@ function photo_to_obj(photo)
 		$scope.index = null;
 		$scope.photo = null;
 		$scope.current_image = null;
+		$scope.loader = true;
 
 		$scope.fotorama = $('#gallery').fotorama(fotorama_config).data('fotorama');
 
@@ -81,11 +82,16 @@ function photo_to_obj(photo)
 			$http({ method: "JSONP", url: url+'&callback=JSON_CALLBACK'}).success(function(data){
 				$scope.photos.push.apply($scope.photos, data.entries);
 				if(($scope.album_id || $scope.tag_id) && data.links.next) c.loadAdditionalPhotos(data.links.next);
-				else $scope.fotorama.load($scope.photos.map(photo_to_obj));
+				else
+				{
+					$scope.fotorama.load($scope.photos.map(photo_to_obj));
+					$scope.loader = false;
+				}
 			});
 		};
 
 		this.reloadPhotos = function(){
+			$scope.loader = true;
 			url = base_url;
 			//TODO: грузит не все, а только 100 первых
 			if($scope.album_id)

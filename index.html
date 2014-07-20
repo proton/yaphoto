@@ -15,8 +15,8 @@
   </head>
   <body ng-controller="PhotosController as c">
     <a pageslide href="#panel" class="panel-open" ng-click="panel_open = !panel_open"><img src="menu.svg" /></a>
+    <div id="loader" ng-show="loader"><div class="loader-content">Loading...</div></div>
     <div id="gallery"></div>
-
     <div id="panel">
       <a id="panel-close" href="#"></a>
       <ul class="nav_list">

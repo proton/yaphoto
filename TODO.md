@@ -1,2 +1,1 @@
 - changing url on photo change
-- loader
