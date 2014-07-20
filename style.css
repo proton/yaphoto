@@ -47,7 +47,7 @@ a#panel-close:hover {
 
 #ng-pageslide {
   background: #eee;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 #panel {
