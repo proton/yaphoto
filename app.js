@@ -77,6 +77,14 @@ function photo_to_obj(photo)
 			$scope.tags = data.entries;
 		});
 
+		this.loadAdditionalPhotos = function(url){
+			$http({ method: "JSONP", url: url+'&callback=JSON_CALLBACK'}).success(function(data){
+				$scope.photos.push.apply($scope.photos, data.entries);
+				if(($scope.album_id || $scope.tag_id) && data.links.next) c.loadAdditionalPhotos(data.links.next);
+				else $scope.fotorama.load($scope.photos.map(photo_to_obj));
+			});
+		};
+
 		this.reloadPhotos = function(){
 			url = base_url;
 			//TODO: грузит не все, а только 100 первых
@@ -88,14 +96,10 @@ function photo_to_obj(photo)
 			{
 				url += '/tag/'+$scope.tag_id;
 			}
-			url += '/photos/?format=json&callback=JSON_CALLBACK';
-			$http({ method: "JSONP", url: url}).success(function(data){
-				$scope.photos = data.entries;
-				$scope.fotorama.load($scope.photos.map(photo_to_obj));
-			});
+			url += '/photos/?format=json';
+			$scope.photos = [];
+			this.loadAdditionalPhotos(url);
 		};
-
-		this.reloadPhotos();
 
 		$scope.to_id = function(t){
 			return decodeURI(t.id.split(':')[5]);

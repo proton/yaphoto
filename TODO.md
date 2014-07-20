@@ -1,2 +1,2 @@
 - changing url on photo change
-- api pagination
+- loader
