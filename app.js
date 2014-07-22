@@ -20,7 +20,6 @@ var fotorama_config = {
   allowfullscreen: true
 };
 
-
 function photo_to_obj(photo)
 {
 	var full_photo = photo.img.orig || photo.img.XXXL || photo.img.XL || photo.img.L;
@@ -59,10 +58,10 @@ function photo_to_obj(photo)
 		$scope.tags = [];
 		$scope.photos = [];
 		$scope.loaded = false;
-		$scope.index = null;
 		$scope.photo = null;
 		$scope.current_image = null;
 		$scope.loader = true;
+		$scope.first_time = true;
 
 		$scope.fotorama = $('#gallery').fotorama(fotorama_config).data('fotorama');
 
@@ -85,6 +84,7 @@ function photo_to_obj(photo)
 				else
 				{
 					$scope.fotorama.load($scope.photos.map(photo_to_obj));
+					if(typeof($scope.index) != 'undefined') $scope.fotorama.show($scope.index);
 					$scope.loader = false;
 				}
 			});
@@ -107,21 +107,47 @@ function photo_to_obj(photo)
 			this.loadAdditionalPhotos(url);
 		};
 
+		this.getUrl = function(){
+			var url = '/';
+			if($scope.album_id) url+='albums/'+$scope.album_id+'/'
+			else if($scope.tag_id) url+='tags/'+$scope.tag_id+'/'
+			url+=$scope.index;
+			return url;
+		}
+
 		$scope.to_id = function(t){
 			return decodeURI(t.id.split(':')[5]);
 		};
 
 		$('#gallery').on('fotorama:showend', function (e, fotorama) {
-			var photo = $scope.photos.length==0 ? null : $scope.photos[$scope.fotorama.activeIndex];
+			if($scope.first_time) $scope.first_time = false;
+			else  $scope.index = $scope.fotorama.activeIndex;
+			var photo = $scope.photos.length==0 ? null : $scope.photos[$scope.index];
+			$scope.skip_routes = true;
+			$location.path(c.getUrl(), false);
 			if($scope.$$phase) $scope.photo = photo;
 			else $scope.$apply(function(){ $scope.photo = photo; });
 		});
 
 		$scope.$on('$locationChangeSuccess', function (event) {
-			var location_array = $location.$$path.split('/');
-			$scope.album_id = location_array[1]=='albums' ? location_array[2] : null;
-			$scope.tag_id = location_array[1]=='tags' ? location_array[2] : null;
-			c.reloadPhotos();
+			if(!$scope.skip_routes)
+			{
+				var location_array = $location.$$path.split('/');
+				$scope.album_id = location_array[1]=='albums' ? location_array[2] : null;
+				$scope.tag_id = location_array[1]=='tags' ? location_array[2] : null;
+				var has_chapt = ($scope.album_id || $scope.tag_id);
+				if(has_chapt && location_array.length>3)
+				{
+					$scope.index = parseInt(location_array[3], 10);
+				}
+				else if(!has_chapt && location_array.length>1)
+				{
+					$scope.index = parseInt(location_array[1], 10);
+				}
+				x = $scope.index;
+				c.reloadPhotos();
+			}
+			$scope.skip_routes = false;
 		});
 	}]);
 })();
